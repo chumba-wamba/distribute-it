@@ -5,10 +5,13 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from mongoengine import connect
 
+from router import task
+
 load_dotenv(override=True)
 
 connect(os.getenv("DATABASE"))
 app = FastAPI()
+app.include_router(task.router)
 
 
 @app.get("/")
