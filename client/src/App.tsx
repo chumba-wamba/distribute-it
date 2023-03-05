@@ -1,23 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import GoogleIcon from "@mui/icons-material/Google";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import logo from "./distribute-it-logo.svg";
+import "./App.css";
+import { Button } from "@mui/material";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="header">
+        <img src={logo} className="logo" alt="logo" />
+        <div className="container">
+          <div className="button">
+            <Button variant="outlined" startIcon={<GoogleIcon />}>
+              Sign-in with Google
+            </Button>
+          </div>
+          <div className="button">
+            <Button variant="outlined" startIcon={<GitHubIcon />}>
+              Sign-in with GitHub
+            </Button>
+          </div>
+        </div>
       </header>
     </div>
   );
