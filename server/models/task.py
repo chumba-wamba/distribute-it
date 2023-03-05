@@ -11,12 +11,13 @@ class DBTask(Document):
     executor = StringField(min_length=1, max_length=30)
     status = EnumField(enum=Status, default=Status.INCOMPLETE, required=True)
 
-    def __init__(self, name: str, incentive_amount: float, description: str, owner: str, executor: str = None, status: Status = None, *args, **kwargs):
-        super(DBTask, self).__init__()
-        self.name = name
-        self.incentive_amount = incentive_amount
-        self.description = description
-        self.owner = owner
-        self.executor = executor
-        self.status = status
-
+    def to_json(self):
+        return {
+            "_id": str(self.pk),
+            "name": self.name,
+            "incentive_amount": self.incentive_amount,
+            "description": self.description,
+            "owner": self.owner,
+            "executor": self.executor,
+            "status": self.status
+        }
