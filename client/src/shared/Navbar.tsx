@@ -5,8 +5,15 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
 import logo from "../distribute-it-logo.svg";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const logout = () => {
+    navigate("/");
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ background: "white", color: "gray" }}>
@@ -20,12 +27,13 @@ const Navbar = () => {
             src={logo}
           />
           <Typography component="div" sx={{ flexGrow: 1 }}>
-            {/* Distribute-it */}
+            Distribute-it
           </Typography>
           <Button
             style={{ textTransform: "none" }}
             color="inherit"
             startIcon={<LogoutIcon />}
+            onClick={logout}
           >
             Sign out
           </Button>

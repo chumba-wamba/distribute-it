@@ -8,7 +8,6 @@ export const AcceptTaskList = () => {
 
   useEffect(() => {
     fetchAllTasks().then((response) => {
-      console.log(response.data);
       setTasks(response.data.data);
     });
   }, []);
