@@ -1,0 +1,8 @@
+.parent{
+    margin: 2% 10%;
+    padding: 5px 0px;
+    background-color: #706c6c;
+    width : 80%;
+    height: 80%;
+    min-height : 375px;
+}
