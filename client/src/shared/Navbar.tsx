@@ -20,7 +20,7 @@ const Navbar = () => {
             src={logo}
           />
           <Typography component="div" sx={{ flexGrow: 1 }}>
-            Distribute-it
+            {/* Distribute-it */}
           </Typography>
           <Button
             style={{ textTransform: "none" }}
