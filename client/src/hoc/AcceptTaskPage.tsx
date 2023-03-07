@@ -3,6 +3,8 @@ import { Paper } from "@mui/material";
 import "./AcceptTaskPage.css";
 import { FixedLayout } from "../shared/FixedLayout";
 import Navbar from "../shared/Navbar";
+import CreatedTaskList from "../shared/CreatedTaskList";
+import CompletedTaskList from "../shared/CompletedTaskList";
 
 export const AcceptTaskPage = () => {
   return (

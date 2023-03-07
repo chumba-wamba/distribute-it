@@ -1,20 +1,20 @@
-import DoneIcon from "@mui/icons-material/Done";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton, Paper } from "@mui/material";
 import { TaskModel } from "../utils/models";
 import "./TaskCommon.css";
 
-interface AcceptTaskProps {
+interface CreatedTaskProps {
   task: TaskModel;
 }
 
-export const AcceptTask = ({ task }: AcceptTaskProps) => {
+export const CreatedTask = ({ task }: CreatedTaskProps) => {
   return (
     <Paper className="container flex-container" elevation={6}>
       <div className="row">
         <div className="flex-item">
           <b>{task.name}</b>
         </div>
-        <div className="flex-item">Description: {task.description}</div>
+        <div className="flex-item">Status: {task.status}</div>
       </div>
       <div className="row">
         <div className="flex-item">
@@ -22,7 +22,7 @@ export const AcceptTask = ({ task }: AcceptTaskProps) => {
         </div>
         <div className="flex-item">
           <IconButton color="primary" component="label">
-            <DoneIcon />
+            <DeleteIcon />
           </IconButton>
         </div>
       </div>
