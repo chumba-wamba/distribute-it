@@ -1,10 +1,12 @@
-from mongoengine import Document, EnumField, FloatField, StringField
+from mongoengine import Document
+from mongoengine.fields import EnumField, FloatField, StringField, BinaryField
 
 from .status import Status
 
 
 class DBTask(Document):
     name = StringField(min_length=1, max_length=255, required=True)
+    file = BinaryField(required = True)
     incentive_amount = FloatField(required=True)
     description = StringField(min_length=10, max_length=1000, required=True)
     owner = StringField(min_length=1, max_length=30, required=True)
@@ -15,6 +17,7 @@ class DBTask(Document):
         return {
             "_id": str(self.pk),
             "name": self.name,
+            "file": self.file,
             "incentive_amount": self.incentive_amount,
             "description": self.description,
             "owner": self.owner,
