@@ -27,9 +27,9 @@ export const AcceptTaskList = () => {
   }
   useEffect(() => {
 
-    // fetchAllTasks().then((response) => {
-    //   setTasks(response.data.data);
-    // });
+    fetchAllTasks().then((response) => {
+      setTasks(response.data.data);
+    });
   }, []);
   
   return (
