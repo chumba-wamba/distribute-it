@@ -5,9 +5,15 @@ import "./TaskCommon.css";
 
 interface AcceptTaskProps {
   task: TaskModel;
+  runWorker(task:TaskModel):void;
 }
 
-export const AcceptTask = ({ task }: AcceptTaskProps) => {
+export const AcceptTask = ({ task, runWorker }: AcceptTaskProps) => {
+
+  const handleWorker=()=>{
+    runWorker(task)
+  }
+  
   return (
     <Paper className="container flex-container" elevation={6}>
       <div className="row">
@@ -21,8 +27,8 @@ export const AcceptTask = ({ task }: AcceptTaskProps) => {
           Incentive amount: ${task.incentive_amount}
         </div>
         <div className="flex-item">
-          <IconButton color="primary" component="label">
-            <DoneIcon />
+          <IconButton color="primary" component="label" >
+            <DoneIcon onClick={handleWorker}/>
           </IconButton>
         </div>
       </div>
