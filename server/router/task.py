@@ -17,8 +17,9 @@ def create_task(task: APITask):
 
 @router.get("/fetch")
 def fetch_all_tasks():
+    tasks = [task.to_json() for task in DBTask.objects()]
     return {
-        "data": [task.to_json() for task in DBTask.objects()]
+        "data": tasks
     }
 
 

@@ -8,6 +8,14 @@ interface AcceptTaskProps {
 }
 
 export const AcceptTask = ({ task }: AcceptTaskProps) => {
+  const saveByteArray = (fileName: string, fileContent: string) => {
+    const blob = new Blob([fileContent], { type: "text/javascript" });
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+  };
+
   return (
     <Paper className="container flex-container" elevation={6}>
       <div className="row">
@@ -21,7 +29,11 @@ export const AcceptTask = ({ task }: AcceptTaskProps) => {
           Incentive amount: ${task.incentive_amount}
         </div>
         <div className="flex-item">
-          <IconButton color="primary" component="label">
+          <IconButton
+            color="primary"
+            component="label"
+            onClick={() => saveByteArray("Worker", task.file)}
+          >
             <DoneIcon />
           </IconButton>
         </div>

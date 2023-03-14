@@ -1,5 +1,6 @@
 export interface TaskModel {
   _id?: string;
+  file: string;
   name: string;
   incentive_amount: number;
   description?: string;
