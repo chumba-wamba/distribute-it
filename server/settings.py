@@ -7,9 +7,9 @@ class Settings(BaseSettings):
     database: str = "distributed"
     frontend_url = "http://localhost:3000"
     google_client_id: str = (
-        "89647527210-10g1u8u0kef7e03ikvoisjglh0tb5kmk.apps.googleusercontent.com"
+        ""
     )
-    google_client_secret: str = "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"
+    google_client_secret: str = ""
 
 
 class AccessTokenSettings(BaseSettings):
