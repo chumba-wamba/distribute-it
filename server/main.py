@@ -1,21 +1,15 @@
-import os
-
-import uvicorn
-from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from mongoengine import connect
-from router import task
+from routes import auth, task
+from settings import settings
 
-load_dotenv(override=True)
-
-connect(os.getenv("DATABASE"))
+connect(settings.database)
 app = FastAPI()
+app.include_router(auth.router)
 app.include_router(task.router)
 
-origins = [
-    os.getenv('FRONTEND_URL')
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,9 +21,5 @@ app.add_middleware(
 
 
 @app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-if __name__ == "__main__":
-    uvicorn.run(app, host=os.getenv('HOST'), port=int(os.getenv('PORT')))
+def root():
+    return {"hello": "world"}

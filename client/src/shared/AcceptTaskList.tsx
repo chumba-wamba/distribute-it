@@ -16,10 +16,14 @@ export const AcceptTaskList = () => {
 
   const [tasks, setTasks] = useState<TaskModel[]>();
 
-  const runWorker = (task: TaskModel): void => {
-    const worker: Worker = new window.Worker(
-      new URL("../workerFolder/fib-worker.js", import.meta.url)
-    );
+  const runWorker = (): void => {
+    // const worker: Worker = new window.Worker(
+    //   new URL("../workerFolder/fib-worker.js", import.meta.url)
+    // );
+    const text = "const x = 42; console.log(x);";
+    const blob = new Blob([text], { type: "text/javascript" });
+    const file = new File([blob], "test.js");
+    const worker: Worker = new window.Worker(URL.createObjectURL(file));
     const num = 42;
     worker.postMessage({ num });
     worker.onmessage = (e) => {
@@ -28,12 +32,15 @@ export const AcceptTaskList = () => {
   };
   useEffect(() => {
     fetchAllTasks().then((response) => {
+      console.log(response);
       setTasks(response.data.data);
     });
   }, []);
 
   return (
     <>
+      <button onClick={runWorker}>fds</button>
+
       {tasks &&
         tasks
           .filter((task) => task.status === TaskStatus.INCOMPLETE)

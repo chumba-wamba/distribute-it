@@ -1,26 +1,40 @@
 from mongoengine import Document
-from mongoengine.fields import EnumField, FloatField, StringField, BinaryField
+from mongoengine.fields import (
+    BinaryField,
+    EnumField,
+    FloatField,
+    ReferenceField,
+    StringField,
+    IntField,
+)
+from .user import DBUser
 
 from .status import Status
 
 
 class DBTask(Document):
-    name = StringField(min_length=1, max_length=255, required=True)
-    file = BinaryField(required = True)
+    name = StringField(required=True)
+    description = StringField(required=True)
     incentive_amount = FloatField(required=True)
-    description = StringField(min_length=10, max_length=1000, required=True)
-    owner = StringField(min_length=1, max_length=30, required=True)
-    executor = StringField(min_length=1, max_length=30)
+    owner = ReferenceField(DBUser)
+    public_key = StringField(required=True)
+    file = BinaryField(required=True)
+    file_hash = IntField(required=True)
+    result = StringField()
+    executor = ReferenceField(DBUser)
     status = EnumField(enum=Status, default=Status.INCOMPLETE, required=True)
 
     def to_json(self):
         return {
-            "_id": str(self.pk),
+            "id": str(self.pk),
             "name": self.name,
-            "file": self.file,
-            "incentive_amount": self.incentive_amount,
             "description": self.description,
-            "owner": self.owner,
-            "executor": self.executor,
-            "status": self.status
+            "incentive_amount": self.incentive_amount,
+            "owner": self.owner.to_json(),
+            "public_key": self.public_key,
+            "file": self.file,
+            "file_hash": self.file_hash,
+            "result": self.result,
+            "executor": self.executor.to_json() if self.executor else None,
+            "status": self.status,
         }

@@ -17,7 +17,7 @@ const CreatedTaskList = () => {
     <>
       {tasks &&
         tasks
-          .filter((task) => task.owner === "string")
+          // .filter((task) => task.owner === "string")
           .map((task) => (
             <CreatedTask task={task} key={task._id}></CreatedTask>
           ))}
