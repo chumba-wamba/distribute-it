@@ -14,6 +14,7 @@ import {
 } from "../utils/api";
 import { getAccessToken } from "../utils/auth";
 import { Status, TaskType } from "../utils/models";
+import {ethers} from "ethers"
 
 const Task = ({
   taskId,
@@ -29,6 +30,7 @@ const Task = ({
   taskType = TaskType.ACCEPT,
   setTasks,
   setOpen,
+  contractDetails
 }) => {
   const acceptTask = async (fileData) => {
     console.log("in accept task");
@@ -70,10 +72,19 @@ const Task = ({
       fetchData();
 
       const rs = await completeTask(getAccessToken(), e.data.solution, taskId);
-      console.log(rs);
+      const {ethereum}=window;
+      if(ethereum){
+        const account=await ethereum.request({ method: 'eth_requestAccounts'})
+        const value={value:ethers.utils.parseEther(`${incentive}`)}
+        const transaction=await contractDetails.contract.taskComplete(account[0],incentive)
+        await transaction.wait()
+        console.log("Transaction Done")
+      }
+      // console.log(rs);
 
-      console.log(e.data);
+      // console.log(e.data);
       console.log("task completed!");
+
     };
   };
 

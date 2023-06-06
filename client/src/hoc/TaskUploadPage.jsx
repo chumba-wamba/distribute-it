@@ -9,8 +9,9 @@ import TaskUploadForm from "../shared/TaskUploadForm";
 import AddIcon from "@mui/icons-material/Add";
 import { createTask } from "../utils/api";
 import { getAccessToken } from "../utils/auth";
+import {ethers} from "ethers";
 
-const TaskUploadPage = () => {
+const TaskUploadPage = ({contractDetails}) => {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -20,9 +21,10 @@ const TaskUploadPage = () => {
     fileData: "",
   });
 
+
   const handleClickOpen = () => {
     setOpen(true);
-  };
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -42,6 +44,12 @@ const TaskUploadPage = () => {
       public_key: formData.publicKey,
       file: encodeURI(formData.fileData),
     };
+
+
+    const value={value:ethers.utils.parseEther(`${formData.incentive}`)}
+    const transaction=await contractDetails.contract.uploadTask(task.name,"trans",value) 
+    await transaction.wait()
+    console.log("Transaction Done")
     const rs = await createTask(getAccessToken(), task);
     console.log(rs);
     handleClose();

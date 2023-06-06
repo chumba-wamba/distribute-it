@@ -10,9 +10,45 @@ import { getAccessToken, isLoggedIn } from "./utils/auth";
 import theme from "./utils/theme";
 import UploadedTaskPage from "./hoc/UploadedTaskPage";
 import ExecutedTaskPage from "./hoc/ExecutedTaskPage";
+import {useState,useEffect} from "react"
+import {ethers} from "ethers"
+import TestContract from "./utils/TestContract.json"
 
 function App() {
   const location = useLocation();
+  const [contractDetails,setContractDetails]=useState({
+    provider:null,
+    signer:null,
+    contract:null
+  })
+
+
+  useEffect(()=>{
+    const connectWallet=async()=>{
+      const contractAddress="0xd755E7DC18636DBb5001dE6b331A355bf527B916"
+      const contractABI=TestContract.abi
+      try{
+        const {ethereum}=window;
+        if(ethereum){
+          const account=await ethereum.request({ method: 'eth_requestAccounts'})
+          const provider=new ethers.providers.Web3Provider(ethereum)
+          const signer=provider.getSigner()
+          const contract =new ethers.Contract(
+            contractAddress,
+            contractABI,
+            signer)
+
+          setContractDetails({provider,signer,contract})
+
+        }
+      }catch(error){
+        console.log(error)
+      }
+    }
+    connectWallet()
+  },[]);
+
+
   const PrivateRoutes = () => {
     return getAccessToken() ? <Outlet /> : <Navigate to="/" />;
   };
@@ -32,7 +68,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route
               path="/accept-task"
-              element={<AcceptTaskPage></AcceptTaskPage>}
+              element={<AcceptTaskPage contractDetails={contractDetails} ></AcceptTaskPage>}
             ></Route>
             <Route
               path="/uploaded-task"
@@ -45,7 +81,7 @@ function App() {
           </Route>
         </Routes>
         {location.pathname !== "/" && isLoggedIn() && (
-          <TaskUploadPage></TaskUploadPage>
+          <TaskUploadPage contractDetails={contractDetails}></TaskUploadPage>
         )}
       </ThemeProvider>
     </GoogleOAuthProvider>

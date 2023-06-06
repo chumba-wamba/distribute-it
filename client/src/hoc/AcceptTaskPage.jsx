@@ -8,8 +8,9 @@ import { fetchAllTasks } from "../utils/api";
 import { getAccessToken } from "../utils/auth";
 import { Status } from "../utils/models";
 import NoItemsMessage from "../shared/NoItemsMessage";
+import {ethers} from "ethers";
 
-const AcceptTaskPage = () => {
+const AcceptTaskPage = ({contractDetails}) => {
   const [tasks, setTasks] = useState();
   const [open, setOpen] = useState(false);
 
@@ -67,6 +68,7 @@ const AcceptTaskPage = () => {
                   status={task.status}
                   setTasks={setTasks}
                   setOpen={setOpen}
+                  contractDetails={contractDetails}
                 ></Task>
               );
           })
